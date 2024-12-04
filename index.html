@@ -81,6 +81,30 @@
       <ul id="announcement-list"></ul>
     </div>
 
+    <div id="update-user">
+      <h2>Update User</h2>
+      <form id="update-user-form">
+        <input type="number" id="update-user-id" placeholder="User ID" required>
+        <input type="text" id="update-firstname" placeholder="First Name">
+        <input type="text" id="update-lastname" placeholder="Last Name">
+        <input type="email" id="update-email" placeholder="Email">
+        <input type="password" id="update-password" placeholder="New Password">
+        <input type="password" id="update-current-password" placeholder="Current Password">
+        <label for="update-active">Is Active:</label>
+        <input type="checkbox" id="update-active"> Active
+        <button type="button" id="update-user-button">Update User</button>
+      </form>
+    </div>
+    
+    <div id="delete-event">
+      <h2>Delete Event</h2>
+      <form id="delete-event-form">
+        <input type="number" id="delete-event-id" placeholder="Event ID" required>
+        <button type="button" id="delete-event-button">Delete Event</button>
+      </form>
+    </div>
+    
+
     <div id="logout">
       <button type="button" id="logout-button">Logout</button>
     </div>
