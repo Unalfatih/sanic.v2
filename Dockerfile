@@ -1,17 +1,15 @@
-# Python slim imajını kullan
-FROM python:3.10-slim
+# Sanic tabanlı Python uygulaması için Dockerfile
+FROM python:3.11-slim
 
-# Çalışma dizini oluştur
+# Çalışma dizini ayarla
 WORKDIR /app
 
-# Gerekli dosyaları kopyala
-COPY requirements.txt ./
-
-# Sanic ve diğer bağımlılıkları yükle
+# Gereksinimleri kopyala ve kur
+COPY requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt
 
-# Uygulama dosyalarını kopyala
-COPY . .
+# Uygulamayı kopyala
+COPY . /app/
 
-# Sanic uygulamasını başlat
-CMD ["python", "main.py"]
+# Sanic uygulamasını çalıştır
+ENTRYPOINT ["python", "/app/main.py"]

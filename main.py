@@ -3,6 +3,7 @@ from sanic_ext import Extend
 from redis.asyncio import from_url
 from utils.db import setup_db
 from routes import users, events, announcements
+import os
 
 app = Sanic("UserApp")
 
@@ -10,7 +11,8 @@ app = Sanic("UserApp")
 Extend(app)
 
 # Redis bağlantısı
-redis = from_url("redis://localhost:6379")
+#redis = from_url("redis://localhost:6379")
+redis = from_url(os.getenv("REDIS_URL", "redis://localhost:6379"))
 
 # Middleware - CORS
 @app.middleware("response")
