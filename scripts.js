@@ -7,8 +7,6 @@ document.addEventListener("DOMContentLoaded", () => {
   document.getElementById("fetch-events-button").onclick = fetchEvents;
   document.getElementById("fetch-announcements-button").onclick = fetchAnnouncements;
   document.getElementById("logout-button").onclick = logoutUser;
-  document.getElementById("update-user-button").onclick = updateUser;
-  document.getElementById("delete-event-button").onclick = deleteEvent;
 });
 
 
@@ -65,34 +63,25 @@ async function loginUser() {
   }
 }
 
+// Tüm kullanıcıları getir
 async function fetchUsers() {
-  try {
-    const response = await fetch(`${API_URL}/users/getall`);
-    const data = await response.json();
+  const response = await fetch(`${API_URL}/users/getall`);
+  const users = await response.json();
 
-    // API'den dönen veriden "users" anahtarını çekiyoruz
-    const users = data.users;
+  const userList = document.getElementById("user-list");
+  userList.innerHTML = "";
 
-    const userList = document.getElementById("user-list");
-    userList.innerHTML = "";
-
-    users.forEach((user) => {
-      const li = document.createElement("li");
-      li.textContent = `${user.first_name} ${user.last_name} (${user.email}) - Role: ${user.role} - Created At: ${user.created_at}`;
-      userList.appendChild(li);
-    });
-  } catch (error) {
-    console.error("Kullanıcılar alınırken bir hata oluştu:", error);
-    alert("Kullanıcı verisi alınırken bir hata oluştu. Lütfen konsolu kontrol edin.");
-  }
+  users.forEach((user) => {
+    const li = document.createElement("li");
+    li.textContent = `${user.first_name} ${user.last_name} (${user.email}) - Created At: ${user.created_at}`;
+    userList.appendChild(li);
+  });
 }
-
 
 // Etkinlikleri getir
 async function fetchEvents() {
   const response = await fetch(`${API_URL}/events/getall`);
-  const data = await response.json();
-  const events = data.events;
+  const events = await response.json();
 
   const eventList = document.getElementById("event-list");
   eventList.innerHTML = "";
@@ -107,8 +96,7 @@ async function fetchEvents() {
 // Duyuruları getir
 async function fetchAnnouncements() {
   const response = await fetch(`${API_URL}/announcements/getall`);
-  const data = await response.json();
-  const announcements = data.announcements;
+  const announcements = await response.json();
 
   const announcementList = document.getElementById("announcement-list");
   announcementList.innerHTML = "";
@@ -171,44 +159,3 @@ function logoutUser() {
 }
 
 
-// Kullanıcı güncelleme
-async function updateUser() {
-  const userId = document.getElementById("update-user-id").value;
-  const firstName = document.getElementById("update-firstname").value;
-  const lastName = document.getElementById("update-lastname").value;
-  const email = document.getElementById("update-email").value;
-  const newPassword = document.getElementById("update-password").value;
-  const currentPassword = document.getElementById("update-current-password").value;
-  const isActive = document.getElementById("update-active").checked;
-
-  const payload = {};
-  if (firstName) payload.first_name = firstName;
-  if (lastName) payload.last_name = lastName;
-  if (email) payload.email = email;
-  if (newPassword) {
-    payload.new_password = newPassword;
-    payload.current_password = currentPassword;
-  }
-  payload.is_active = isActive;
-
-  const response = await fetch(`${API_URL}/users/update/${userId}`, {
-    method: "PUT",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify(payload),
-  });
-
-  const result = await response.json();
-  alert(result.message);
-}
-
-// Etkinlik silme
-async function deleteEvent() {
-  const eventId = document.getElementById("delete-event-id").value;
-
-  const response = await fetch(`${API_URL}/events/delete/${eventId}`, {
-    method: "DELETE",
-  });
-
-  const result = await response.json();
-  alert(result.message);
-}
