@@ -5,16 +5,29 @@ from sqlalchemy.future import select
 from models.model import Base, User, Event, Announcement
 import bcrypt
 from sanic_ext import Extend
+<<<<<<< HEAD
 
+=======
+from redis.asyncio import from_url
+from utils.db import setup_db
+from routes import users, events, announcements
+import os
+>>>>>>> Domain
 
 app = Sanic("UserApp")
 
 Extend(app)
 
+<<<<<<< HEAD
 # Veritabanı bağlantı ayarları
 DATABASE_URL = "mysql+aiomysql://root:159753@localhost:3306/school_club"
 engine = create_async_engine(DATABASE_URL, echo=True)
 SessionLocal = sessionmaker(bind=engine, class_=AsyncSession, expire_on_commit=False)
+=======
+# Redis bağlantısı
+#redis = from_url("redis://localhost:6379")
+redis = from_url(os.getenv("REDIS_URL", "redis://localhost:6379"))
+>>>>>>> Domain
 
 #CORS hatası çözümü
 @app.middleware("response")
