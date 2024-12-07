@@ -30,7 +30,7 @@ async def get_all_users(request):
         return response.json({"users": users_list})
 
 
-@bp.put("/users/deactivate/<user_id:int>")
+@bp.put("/deactivate/<user_id:int>")
 async def deactivate_user(request, user_id):
     """
     Belirtilen kullanıcı ID'sine göre kullanıcıyı devre dışı bırakır (is_active = False).
@@ -52,7 +52,7 @@ async def deactivate_user(request, user_id):
 
         return response.json({"message": f"User with ID {user_id} has been deactivated."}, status=200)
 
-@bp.put("/users/update/<user_id:int>")
+@bp.put("/update/<user_id:int>")
 async def update_user(request, user_id):
     """
     Kullanıcı bilgilerini ve opsiyonel olarak şifresini günceller.
@@ -96,7 +96,7 @@ async def update_user(request, user_id):
     
     
 
-@bp.post("/users/register")
+@bp.post("/register")
 async def register_user(request):
     """Yeni bir kullanıcı kaydeder."""
     data = request.json
@@ -136,7 +136,7 @@ async def register_user(request):
     return response.json({"message": "User registered successfully!"}, status=201)
 
 
-@bp.post("/users/login")
+@bp.post("/login")
 async def login_user(request):
     """Kullanıcı giriş yapar."""
     data = request.json
@@ -159,7 +159,7 @@ async def login_user(request):
             return response.json({"message": "Invalid email or password."}, status=401)
 
 #Id ile user getirm fonk.
-@bp.get("/users/<user_id:int>")
+@bp.get("/<user_id:int>")
 async def get_user_by_id(request, user_id):
     """Kullanıcıyı id ile getirir."""
     async with SessionLocal() as session:

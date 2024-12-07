@@ -25,7 +25,7 @@ async def get_all_events(request):
         return response.json({"events": events_list})
 
 
-@bp.post("/events/create")
+@bp.post("/create")
 async def create_event(request):
     data = request.json
     title = data.get("title")
@@ -53,7 +53,7 @@ async def create_event(request):
         return response.json({"message": "Event created successfully!"}, status=201)
 
 
-@bp.delete("/events/delete/<event_id:int>")
+@bp.delete("/delete/<event_id:int>")
 async def delete_event(request, event_id):
     """
     Belirtilen ID'ye sahip etkinliği siler.

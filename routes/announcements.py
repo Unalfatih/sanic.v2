@@ -24,7 +24,7 @@ async def get_all_announcements(request):
         await redis.set(cache_key, json.dumps(announcements_list), ex=60)
         return response.json({"announcements": announcements_list})
 
-@bp.post("/announcements/create")
+@bp.post("/create")
 async def create_announcement(request):
     data = request.json
     title = data.get("title")
@@ -48,7 +48,7 @@ async def create_announcement(request):
         return response.json({"message": "Announcement created successfully!"}, status=201)
 
 
-@bp.delete("/announcements/delete/<announcement_id:int>")
+@bp.delete("/delete/<announcement_id:int>")
 async def delete_announcement(request, announcement_id):
     async with SessionLocal() as session:
         result = await session.execute(select(Announcement).where(Announcement.id == announcement_id))
